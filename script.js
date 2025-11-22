@@ -1,3 +1,58 @@
+// ФИКС ДЛЯ Z-INDEX И ПРОЗРАЧНОСТИ
+function fixBackgroundIssues() {
+    console.log('🔧 Fixing background and z-index issues...');
+    
+    // Принудительно устанавливаем прозрачность для секций
+    const sections = document.querySelectorAll('.hero, .project-showcase, .section');
+    sections.forEach(section => {
+        section.style.background = 'transparent';
+        section.style.backgroundColor = 'transparent';
+    });
+    
+    // Принудительно устанавливаем z-index для фона
+    const background = document.querySelector('.floating-background');
+    if (background) {
+        background.style.zIndex = '-100';
+        background.style.background = 'transparent';
+    }
+    
+    // Принудительно устанавливаем z-index для форм
+    const shapes = document.querySelectorAll('.organic-shape, .organic-shapes-container');
+    shapes.forEach(shape => {
+        shape.style.zIndex = '-99';
+    });
+    
+    console.log('✅ Background issues fixed');
+}
+
+// ВЫЗОВИТЕ ЭТУ ФУНКЦИЮ В DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 DOM loaded, initializing animations...');
+    
+    // Сначала фиксим фон и z-index
+    fixBackgroundIssues();
+    
+    // Потом инициализируем анимации
+    const organicBg = new OrganicBackground();
+    new TextAnimator();
+    new ProjectShowcase();
+    new HeaderScroll();
+    new SectionNavigation();
+    
+    // Плавное появление body
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+        document.body.classList.add('loaded');
+        
+        // Повторно фиксим после загрузки
+        setTimeout(fixBackgroundIssues, 100);
+    }, 100);
+    
+    // Экстренный фикс через 2 секунды
+    setTimeout(fixBackgroundIssues, 2000);
+});
+
+// Остальной код оставьте как был...
 class TextAnimator {
     constructor() {
         this.lines = document.querySelectorAll('.title-line');
@@ -18,8 +73,10 @@ class TextAnimator {
         
         // Pause on hover
         const heroContent = document.querySelector('.hero-content');
-        heroContent.addEventListener('mouseenter', () => this.stopRotation());
-        heroContent.addEventListener('mouseleave', () => this.startRotation());
+        if (heroContent) {
+            heroContent.addEventListener('mouseenter', () => this.stopRotation());
+            heroContent.addEventListener('mouseleave', () => this.startRotation());
+        }
     }
     
     rotateText() {
@@ -42,9 +99,11 @@ class TextAnimator {
     }
     
     startRotation() {
-        this.interval = setInterval(() => {
-            this.rotateText();
-        }, 3500);
+        if (!this.interval) {
+            this.interval = setInterval(() => {
+                this.rotateText();
+            }, 3500);
+        }
     }
     
     stopRotation() {
@@ -67,6 +126,8 @@ class ProjectShowcase {
     }
     
     init() {
+        if (this.items.length === 0) return;
+        
         // Set initial active item
         this.updateItemStates();
         
@@ -79,7 +140,7 @@ class ProjectShowcase {
         
         // Smooth scroll for hero indicator
         const scrollIndicator = document.querySelector('.scroll-indicator');
-        if (scrollIndicator) {
+        if (scrollIndicator && this.container) {
             scrollIndicator.addEventListener('click', () => {
                 this.container.scrollIntoView({
                     behavior: 'smooth',
@@ -103,6 +164,8 @@ class ProjectShowcase {
     }
     
     handleScroll() {
+        if (!this.container || !this.scrollArea) return;
+        
         const scrollY = window.scrollY;
         const windowHeight = window.innerHeight;
         const containerStart = this.container.offsetTop;
@@ -113,7 +176,6 @@ class ProjectShowcase {
         this.scrollProgress = Math.max(0, Math.min(1, (scrollY - containerStart) / (containerHeight - windowHeight)));
         
         // Calculate which item should be active based on scroll position
-        // Разделяем область прокрутки на равные части для каждого элемента
         const itemScrollHeight = (containerHeight - windowHeight) / (this.totalItems - 1);
         let newIndex = 0;
         
@@ -168,6 +230,8 @@ class HeaderScroll {
     }
     
     init() {
+        if (!this.header) return;
+        
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
             
@@ -198,7 +262,6 @@ class SectionNavigation {
         this.navDots = document.querySelectorAll('.nav-dot');
         this.prevButton = document.getElementById('prevSection');
         this.nextButton = document.getElementById('nextSection');
-        this.organicShapes = document.querySelectorAll('.organic-shape');
         
         this.sections = document.querySelectorAll('.section');
         this.currentSectionIndex = 0;
@@ -207,6 +270,8 @@ class SectionNavigation {
     }
     
     init() {
+        if (this.sections.length === 0) return;
+        
         this.updateNavigation();
         
         // Add event listeners
@@ -216,13 +281,17 @@ class SectionNavigation {
             });
         });
 
-        this.prevButton.addEventListener('click', () => {
-            this.goToSection(this.currentSectionIndex - 1);
-        });
+        if (this.prevButton) {
+            this.prevButton.addEventListener('click', () => {
+                this.goToSection(this.currentSectionIndex - 1);
+            });
+        }
 
-        this.nextButton.addEventListener('click', () => {
-            this.goToSection(this.currentSectionIndex + 1);
-        });
+        if (this.nextButton) {
+            this.nextButton.addEventListener('click', () => {
+                this.goToSection(this.currentSectionIndex + 1);
+            });
+        }
 
         // Scroll event for section detection
         window.addEventListener('scroll', () => {
@@ -240,16 +309,14 @@ class SectionNavigation {
                 this.goToSection(this.currentSectionIndex + 1);
             }
         });
-
-        // Add random variations to animations
-        this.addRandomVariations();
-        setInterval(() => this.addRandomVariations(), 30000);
     }
     
     updateNavigation() {
         // Update progress bar
-        const progress = (this.currentSectionIndex / (this.sections.length - 1)) * 100;
-        this.progressBar.style.height = `${progress}%`;
+        if (this.progressBar) {
+            const progress = (this.currentSectionIndex / (this.sections.length - 1)) * 100;
+            this.progressBar.style.height = `${progress}%`;
+        }
         
         // Update dots
         this.navDots.forEach((dot, index) => {
@@ -257,26 +324,11 @@ class SectionNavigation {
         });
         
         // Update buttons
-        this.prevButton.disabled = this.currentSectionIndex === 0;
-        this.nextButton.disabled = this.currentSectionIndex === this.sections.length - 1;
-        
-        // Update background opacity
-        this.updateBackgroundOpacity();
-    }
-    
-    updateBackgroundOpacity() {
-        if (this.currentSectionIndex === 0) {
-            // On hero section - more visible background
-            this.organicShapes.forEach(shape => {
-                shape.style.opacity = '0.08';
-                shape.style.filter = 'blur(8px) brightness(1.1)';
-            });
-        } else {
-            // On projects section - more subtle background
-            this.organicShapes.forEach(shape => {
-                shape.style.opacity = '0.04';
-                shape.style.filter = 'blur(12px) brightness(0.9)';
-            });
+        if (this.prevButton) {
+            this.prevButton.disabled = this.currentSectionIndex === 0;
+        }
+        if (this.nextButton) {
+            this.nextButton.disabled = this.currentSectionIndex === this.sections.length - 1;
         }
     }
     
@@ -318,74 +370,243 @@ class SectionNavigation {
             this.updateNavigation();
         }
     }
+}
+
+// Organic Background Animation - ПЕРЕРАБОТАННЫЙ И ИСПРАВЛЕННЫЙ
+class OrganicBackground {
+    constructor() {
+        this.shapes = document.querySelectorAll('.organic-shape');
+        this.container = document.querySelector('.floating-background');
+        this.init();
+    }
+    
+    init() {
+        if (this.shapes.length === 0) {
+            console.error('❌ No organic shapes found!');
+            return;
+        }
+        
+        console.log('🔥 OrganicBackground initialized with', this.shapes.length, 'shapes');
+        
+        // Принудительно показываем контейнер
+        if (this.container) {
+            this.container.style.display = 'block';
+            this.container.style.visibility = 'visible';
+            this.container.style.opacity = '1';
+        }
+        
+        // Принудительный запуск анимаций
+        this.forceAnimations();
+        
+        // Запуск анимаций с задержкой для каждого элемента
+        this.shapes.forEach((shape, index) => {
+            shape.style.animationDelay = `${index * 0.3}s`;
+        });
+        
+        // Перезапуск анимаций через секунду для надежности
+        setTimeout(() => this.forceAnimations(), 1000);
+        
+        // Случайные вариации каждые 20 секунд
+        setInterval(() => this.addRandomVariations(), 20000);
+    }
+    
+    forceAnimations() {
+        console.log('🎯 Forcing animations to start...');
+        
+        this.shapes.forEach((shape, index) => {
+            // Гарантируем видимость
+            shape.style.visibility = 'visible';
+            shape.style.display = 'block';
+            shape.style.opacity = '0.3';
+            shape.style.willChange = 'transform, opacity';
+            
+            // Принудительно запускаем анимации
+            shape.style.animationPlayState = 'running';
+            
+            // Если анимации не применяются, принудительно их задаем
+            const computedStyle = window.getComputedStyle(shape);
+            const animationName = computedStyle.animationName;
+            
+            if (!animationName || animationName === 'none') {
+                console.log(`🔄 Applying forced animations to shape-${index + 1}`);
+                this.applyForcedAnimations(shape, index);
+            }
+        });
+    }
+    
+    applyForcedAnimations(shape, index) {
+        const animations = [
+            { float: 'float1', pulse: 'pulse1' },
+            { float: 'float2', pulse: 'pulse2' },
+            { float: 'float3', pulse: 'pulse3' },
+            { float: 'float4', pulse: 'pulse4' },
+            { float: 'float5', pulse: 'pulse5' },
+            { float: 'float6', pulse: 'pulse6' }
+        ];
+        
+        if (animations[index]) {
+            const floatTime = 20 + index * 2;
+            const pulseTime = 8 + index * 1;
+            
+            shape.style.animation = `
+                ${animations[index].float} ${floatTime}s ease-in-out infinite,
+                ${animations[index].pulse} ${pulseTime}s ease-in-out infinite
+            `;
+        }
+    }
     
     addRandomVariations() {
-        this.organicShapes.forEach((shape, index) => {
-            const randomSpeed = 1 + (Math.random() - 0.5) * 0.4;
-            const currentAnimations = shape.style.animationDuration;
-
-            if (currentAnimations) {
-                const newDurations = currentAnimations.split(',')
-                    .map(duration => {
-                        const baseTime = parseFloat(duration);
-                        return `${baseTime * randomSpeed}s`;
-                    })
-                    .join(', ');
+        this.shapes.forEach((shape, index) => {
+            const randomSpeed = 0.8 + Math.random() * 0.4;
+            const currentAnimations = window.getComputedStyle(shape).animation;
+            
+            if (currentAnimations && currentAnimations !== 'none') {
+                const newAnimations = currentAnimations.split(', ').map(animation => {
+                    return animation.replace(/(\d+)(?=s)/g, (match) => {
+                        const time = parseFloat(match);
+                        return (time * randomSpeed).toFixed(1);
+                    });
+                }).join(', ');
                 
-                shape.style.animationDuration = newDurations;
+                shape.style.animation = newAnimations;
             }
         });
     }
 }
 
-// Touch swipe handling for mobile
-class TouchNavigation {
-    constructor() {
-        this.touchStartY = 0;
-        this.touchStartX = 0;
-        this.sectionNav = new SectionNavigation();
-        this.init();
-    }
-    
-    init() {
-        document.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
-        document.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
-    }
-    
-    handleTouchStart(event) {
-        this.touchStartY = event.touches[0].clientY;
-        this.touchStartX = event.touches[0].clientX;
-    }
-    
-    handleTouchEnd(event) {
-        const touchEndY = event.changedTouches[0].clientY;
-        const touchEndX = event.changedTouches[0].clientX;
-        
-        const deltaY = this.touchStartY - touchEndY;
-        const deltaX = this.touchStartX - touchEndX;
-        
-        if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
-            if (deltaX > 0) {
-                // Swipe left - next section
-                this.sectionNav.goToSection(this.sectionNav.currentSectionIndex + 1);
-            } else {
-                // Swipe right - previous section
-                this.sectionNav.goToSection(this.sectionNav.currentSectionIndex - 1);
-            }
-        }
-    }
-}
-
-// Initialize everything when DOM is loaded
+// ОБНОВЛЕННАЯ ИНИЦИАЛИЗАЦИЯ
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 DOM loaded, initializing SUPER animations...');
+    
+    // Инициализация анимационного фона ПЕРВОЙ
+    const organicBg = new OrganicBackground();
+    
+    // Инициализация остальных компонентов
     new TextAnimator();
     new ProjectShowcase();
     new HeaderScroll();
     new SectionNavigation();
-    new TouchNavigation();
+    
+    // Плавное появление body с гарантией
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+        document.body.classList.add('loaded');
+        console.log('✅ Body made visible');
+    }, 100);
+    
+    // Дополнительный запуск через задержку
+    setTimeout(() => {
+        console.log('🎯 Final animation force...');
+        organicBg.forceAnimations();
+    }, 500);
+    
+    // Экстренный запуск если всё еще не видно
+    setTimeout(() => {
+        const shapes = document.querySelectorAll('.organic-shape');
+        const bg = document.querySelector('.floating-background');
+        
+        if (bg) {
+            bg.style.display = 'block';
+            bg.style.visibility = 'visible';
+            bg.style.opacity = '1';
+        }
+        
+        shapes.forEach(shape => {
+            shape.style.visibility = 'visible';
+            shape.style.display = 'block';
+            shape.style.opacity = '0.3';
+            shape.style.animationPlayState = 'running';
+        });
+        
+        console.log('🆘 Emergency visibility fix applied');
+    }, 2000);
+});
+
+// Fallback на случай если DOMContentLoaded не сработал
+window.addEventListener('load', () => {
+    console.log('🔄 Window loaded, applying fallback animations...');
+    
+    const shapes = document.querySelectorAll('.organic-shape');
+    const bg = document.querySelector('.floating-background');
+    
+    if (bg) {
+        bg.style.display = 'block';
+        bg.style.visibility = 'visible';
+    }
+    
+    shapes.forEach(shape => {
+        shape.style.visibility = 'visible';
+        shape.style.display = 'block';
+        shape.style.opacity = '0.3';
+        shape.style.animationPlayState = 'running';
+    });
+});
+
+// Обновите часть инициализации в DOMContentLoaded:
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 DOM loaded, initializing SUPER animations...');
+    
+    // Инициализация анимационного фона ПЕРВОЙ
+    const organicBg = new OrganicBackground();
+    
+    // Инициализация остальных компонентов
+    new TextAnimator();
+    new ProjectShowcase();
+    new HeaderScroll();
+    new SectionNavigation();
+    
+    // Плавное появление body
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+        document.body.style.animation = 'fadeInUp 1s ease-out';
+    }, 100);
+    
+    // Дополнительный запуск через задержку
+    setTimeout(() => {
+        console.log('🎯 Forcing animations to start...');
+        organicBg.forceAnimations();
+    }, 500);
+});
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing animations...');
+    
+    // Initialize organic background first
+    const organicBg = new OrganicBackground();
+    
+    // Initialize other components
+    new TextAnimator();
+    new ProjectShowcase();
+    new HeaderScroll();
+    new SectionNavigation();
     
     // Fade in body
     setTimeout(() => {
         document.body.style.opacity = '1';
     }, 100);
+    
+    // Additional force start after a short delay
+    setTimeout(() => {
+        console.log('Forcing animations to start...');
+        organicBg.forceAnimations();
+        
+        // One more attempt to ensure animations are running
+        const shapes = document.querySelectorAll('.organic-shape');
+        shapes.forEach(shape => {
+            shape.style.animationPlayState = 'running';
+        });
+    }, 500);
+});
+
+// Fallback: if DOMContentLoaded doesn't fire, try on window load
+window.addEventListener('load', () => {
+    console.log('Window loaded, checking animations...');
+    
+    const shapes = document.querySelectorAll('.organic-shape');
+    shapes.forEach(shape => {
+        if (shape.style.animationPlayState !== 'running') {
+            shape.style.animationPlayState = 'running';
+        }
+    });
 });
