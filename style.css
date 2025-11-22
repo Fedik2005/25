@@ -861,6 +861,55 @@ body {
         font-size: 1.5rem;
     }
 }
+/* Ensure all project items are properly styled */
+.project-showcase-item[data-index="3"],
+.project-showcase-item[data-index="4"], 
+.project-showcase-item[data-index="5"] {
+    display: flex !important;
+    visibility: visible !important;
+}
+
+/* Additional states for all cards */
+.project-showcase-item.far {
+    opacity: 0.15;
+    transform: translateY(80px) scale(0.88);
+    z-index: 10;
+    filter: blur(1px);
+}
+
+.project-showcase-item.far .project-showcase-card {
+    box-shadow: 
+        0 10px 20px -6px rgba(0, 0, 0, 0.08),
+        0 4px 8px -3px rgba(0, 0, 0, 0.06);
+}
+
+.project-showcase-item.far .project-showcase-image img {
+    transform: scale(1.03);
+    filter: brightness(0.8);
+}
+
+.project-showcase-item.far .project-showcase-content {
+    opacity: 0.5;
+    transform: translateY(15px);
+}
+
+.project-showcase-item.far .project-name {
+    opacity: 0.4;
+}
+
+.project-showcase-item.far .project-opportunity {
+    opacity: 0.6;
+    transform: translateY(6px);
+}
+
+.project-showcase-item.far .project-counter {
+    opacity: 0.4;
+}
+
+.project-showcase-item.far .project-button {
+    opacity: 0.5;
+    transform: translateY(4px);
+}
 
 @media (max-width: 768px) {
     /* Скрываем навигацию на мобильных */
