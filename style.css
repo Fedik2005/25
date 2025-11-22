@@ -410,7 +410,7 @@ body {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -426,15 +426,15 @@ body {
 }
 
 .hero-content {
-    margin-bottom: 6rem;
+    margin-bottom: 3rem;
 }
 
 .hero-title {
-    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
     font-weight: 600;
     line-height: 1;
-    margin-bottom: 1.5rem;
-    height: 5.5rem;
+    margin-bottom: 1rem;
+    height: 4.5rem;
     position: relative;
     overflow: hidden;
 }
@@ -455,10 +455,10 @@ body {
 }
 
 .hero-subtitle {
-    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
     font-weight: 400;
     color: var(--color-gray-600);
-    height: 2.25rem;
+    height: 1.75rem;
     position: relative;
     overflow: hidden;
 }
@@ -480,7 +480,7 @@ body {
 
 .hero-scroll {
     position: absolute;
-    bottom: 3rem;
+    bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -934,7 +934,7 @@ body {
         top: auto;
         left: auto;
         transform: none;
-        padding: 4rem 1rem 2rem;
+        padding: 2rem 1rem 1rem;
         max-width: none;
         text-align: center;
     }
@@ -977,12 +977,12 @@ body {
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: clamp(2.5rem, 10vw, 4rem);
-        height: 4rem;
+        font-size: clamp(2rem, 10vw, 3.5rem);
+        height: 3.5rem;
     }
     
     .hero-subtitle {
-        font-size: clamp(1.25rem, 5vw, 1.75rem);
+        font-size: clamp(1rem, 5vw, 1.5rem);
         height: 1.75rem;
     }
     
