@@ -5,18 +5,25 @@
 }
 
 :root {
-    --color-black: #000000;
+    --color-chocolate: #5D4037; /* Основной шоколадный для текста */
+    --color-chocolate-dark: #3E2723; /* Темный шоколад для акцентов */
+    --color-chocolate-light: #8D6E63; /* Светлый шоколад */
+    --color-olive: #b6bf4c; /* Оливковый */
+    --color-peach: #ef9e5f; /* Персиковый */
+    --color-light-olive: #d9e2a1; /* Светло-оливковый */
+    --color-cream: #fdf7da; /* Кремовый */
+    
     --color-white: #ffffff;
     --color-gray-50: #fafafa;
     --color-gray-100: #f5f5f5;
     --color-gray-200: #e5e5e5;
     --color-gray-300: #d4d4d4;
-    --color-gray-400: #a3a3a3;
-    --color-gray-500: #737373;
-    --color-gray-600: #525252;
-    --color-gray-700: #404040;
-    --color-gray-800: #262626;
-    --color-gray-900: #171717;
+    --color-gray-400: #8D6E63; /* Заменяем серый на светлый шоколад */
+    --color-gray-500: #5D4037; /* Заменяем на основной шоколад */
+    --color-gray-600: #5D4037;
+    --color-gray-700: #5D4037;
+    --color-gray-800: #3E2723;
+    --color-gray-900: #3E2723;
     
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -33,8 +40,8 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 16px;
     line-height: 1.6;
-    color: var(--color-black);
-    background: var(--color-white);
+    color: var(--color-chocolate);
+    background: transparent;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -42,16 +49,19 @@ body {
     transition: opacity 0.8s ease;
 }
 
-/* Анимированный фон с органическими формами */
+/* СУПЕР-АНИМАЦИЯ С ОЛИВКОВО-ПЕРСИКОВЫМИ ТОНАМИ */
 .floating-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: -100;
     pointer-events: none;
     overflow: hidden;
+    background: transparent;
+    display: block !important;
+    visibility: visible !important;
 }
 
 .organic-shapes-container {
@@ -59,148 +69,174 @@ body {
     width: 100%;
     height: 100%;
     isolation: isolate;
+    filter: blur(60px);
+    z-index: -99;
 }
 
 .organic-shape {
     position: absolute;
-    border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%;
-    opacity: 0.08;
-    filter: blur(8px) brightness(1.1);
-    animation-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    border-radius: 50%;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     animation-iteration-count: infinite;
     mix-blend-mode: multiply;
+    will-change: transform, opacity;
+    opacity: 0.4 !important;
+    visibility: visible !important;
+    display: block !important;
+    animation-play-state: running !important;
+    z-index: -98;
 }
 
 .shape-1 {
-    width: 400px;
-    height: 250px;
-    top: 10%;
-    left: 5%;
-    animation: organicFlow1 25s ease-in-out infinite, morphShape1 18s ease-in-out infinite;
-    background: linear-gradient(135deg, rgba(212, 165, 116, 0.4), rgba(190, 130, 80, 0.3));
+    width: 600px;
+    height: 600px;
+    top: -100px;
+    left: -100px;
+    background: radial-gradient(circle, #b6bf4c 0%, rgba(182, 191, 76, 0) 70%);
+    animation: float1 25s ease-in-out infinite, pulse1 8s ease-in-out infinite;
+    opacity: 0.6 !important;
 }
 
 .shape-2 {
-    width: 300px;
-    height: 180px;
+    width: 400px;
+    height: 400px;
     top: 60%;
-    right: 10%;
-    animation: organicFlow2 30s ease-in-out infinite, morphShape2 20s ease-in-out infinite;
-    background: linear-gradient(135deg, rgba(190, 130, 80, 0.3), rgba(212, 165, 116, 0.4));
+    right: -50px;
+    background: radial-gradient(circle, #ef9e5f 0%, rgba(239, 158, 95, 0) 70%);
+    animation: float2 30s ease-in-out infinite, pulse2 12s ease-in-out infinite;
+    opacity: 0.5 !important;
 }
 
 .shape-3 {
-    width: 200px;
-    height: 120px;
-    bottom: 20%;
-    left: 15%;
-    animation: organicFlow3 22s ease-in-out infinite, morphShape3 15s ease-in-out infinite;
-    background: linear-gradient(135deg, rgba(212, 165, 116, 0.5), rgba(180, 115, 70, 0.3));
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    left: 20%;
+    background: radial-gradient(circle, #d9e2a1 0%, rgba(217, 226, 161, 0) 70%);
+    animation: float3 35s ease-in-out infinite, pulse3 10s ease-in-out infinite;
+    opacity: 0.7 !important;
 }
 
 .shape-4 {
     width: 500px;
-    height: 150px;
+    height: 500px;
     top: 30%;
-    right: -100px;
-    animation: organicFlow4 35s ease-in-out infinite, morphShape4 25s ease-in-out infinite;
-    background: linear-gradient(135deg, rgba(190, 130, 80, 0.3), rgba(212, 165, 116, 0.4));
+    left: 60%;
+    background: radial-gradient(circle, #fdf7da 0%, rgba(253, 247, 218, 0) 70%);
+    animation: float4 40s ease-in-out infinite, pulse4 15s ease-in-out infinite;
+    opacity: 0.8 !important;
 }
 
 .shape-5 {
-    width: 180px;
-    height: 180px;
-    bottom: 10%;
-    right: 20%;
-    animation: organicFlow5 28s ease-in-out infinite, morphShape5 18s ease-in-out infinite;
-    background: linear-gradient(135deg, rgba(180, 115, 70, 0.4), rgba(190, 130, 80, 0.3));
+    width: 350px;
+    height: 350px;
+    bottom: 30%;
+    right: 30%;
+    background: radial-gradient(circle, #b6bf4c 0%, rgba(182, 191, 76, 0) 70%);
+    animation: float5 28s ease-in-out infinite, pulse5 9s ease-in-out infinite;
+    opacity: 0.6 !important;
 }
 
 .shape-6 {
-    width: 150px;
-    height: 350px;
-    top: 15%;
-    right: 25%;
-    animation: organicFlow6 32s ease-in-out infinite, morphShape6 22s ease-in-out infinite;
-    background: linear-gradient(135deg, rgba(212, 165, 116, 0.3), rgba(180, 115, 70, 0.4));
+    width: 450px;
+    height: 450px;
+    top: 10%;
+    left: 40%;
+    background: radial-gradient(circle, #ef9e5f 0%, rgba(239, 158, 95, 0) 70%);
+    animation: float6 32s ease-in-out infinite, pulse6 11s ease-in-out infinite;
+    opacity: 0.4 !important;
 }
 
-/* Анимации для форм */
-@keyframes organicFlow1 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.06; }
-    25% { transform: translate(200px, 100px) rotate(45deg) scale(1.3); opacity: 0.12; }
-    50% { transform: translate(100px, -50px) rotate(90deg) scale(0.8); opacity: 0.04; }
-    75% { transform: translate(-150px, 80px) rotate(135deg) scale(1.2); opacity: 0.1; }
+/* Анимации движения */
+@keyframes float1 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    25% { transform: translate(200px, 150px) rotate(90deg) scale(1.2); }
+    50% { transform: translate(100px, -100px) rotate(180deg) scale(0.8); }
+    75% { transform: translate(-150px, 100px) rotate(270deg) scale(1.1); }
 }
 
-@keyframes organicFlow2 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.08; }
-    33% { transform: translate(-180px, -80px) rotate(60deg) scale(1.4); opacity: 0.15; }
-    66% { transform: translate(120px, 120px) rotate(120deg) scale(0.7); opacity: 0.03; }
+@keyframes float2 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    33% { transform: translate(-180px, -120px) rotate(120deg) scale(1.3); }
+    66% { transform: translate(150px, 100px) rotate(240deg) scale(0.7); }
 }
 
-@keyframes organicFlow3 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.1; }
-    20% { transform: translate(150px, -60px) rotate(36deg) scale(1.5); opacity: 0.18; }
-    40% { transform: translate(-100px, 100px) rotate(72deg) scale(0.6); opacity: 0.02; }
-    60% { transform: translate(80px, 60px) rotate(108deg) scale(1.2); opacity: 0.12; }
-    80% { transform: translate(-120px, -40px) rotate(144deg) scale(0.9); opacity: 0.08; }
+@keyframes float3 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    20% { transform: translate(120px, -80px) rotate(72deg) scale(1.4); }
+    40% { transform: translate(-100px, 120px) rotate(144deg) scale(0.6); }
+    60% { transform: translate(80px, 80px) rotate(216deg) scale(1.1); }
+    80% { transform: translate(-120px, -60px) rotate(288deg) scale(0.9); }
 }
 
-@keyframes organicFlow4 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1) skew(0deg); opacity: 0.05; }
-    25% { transform: translate(-300px, 50px) rotate(22deg) scale(1.6) skew(5deg); opacity: 0.12; }
-    50% { transform: translate(200px, -80px) rotate(67deg) scale(0.5) skew(-3deg); opacity: 0.02; }
-    75% { transform: translate(-150px, -30px) rotate(112deg) scale(1.8) skew(8deg); opacity: 0.14; }
+@keyframes float4 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    25% { transform: translate(-220px, 80px) rotate(60deg) scale(1.5); }
+    50% { transform: translate(180px, -120px) rotate(150deg) scale(0.5); }
+    75% { transform: translate(-160px, -80px) rotate(240deg) scale(1.6); }
 }
 
-@keyframes organicFlow5 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.09; }
-    30% { transform: translate(100px, -120px) rotate(54deg) scale(1.7); opacity: 0.16; }
-    60% { transform: translate(-80px, 150px) rotate(126deg) scale(0.4); opacity: 0.01; }
+@keyframes float5 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    30% { transform: translate(140px, -100px) rotate(108deg) scale(1.7); }
+    60% { transform: translate(-100px, 140px) rotate(252deg) scale(0.4); }
 }
 
-@keyframes organicFlow6 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.07; }
-    20% { transform: translate(120px, 80px) rotate(18deg) scale(1.9); opacity: 0.14; }
-    40% { transform: translate(-160px, -60px) rotate(54deg) scale(0.3); opacity: 0.01; }
-    60% { transform: translate(80px, -100px) rotate(90deg) scale(1.5); opacity: 0.12; }
-    80% { transform: translate(-100px, 120px) rotate(144deg) scale(0.7); opacity: 0.05; }
+@keyframes float6 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    20% { transform: translate(160px, 100px) rotate(36deg) scale(1.8); }
+    40% { transform: translate(-140px, -80px) rotate(108deg) scale(0.3); }
+    60% { transform: translate(100px, -120px) rotate(180deg) scale(1.5); }
+    80% { transform: translate(-120px, 140px) rotate(324deg) scale(0.7); }
 }
 
-/* Анимации морфинга форм */
-@keyframes morphShape1 {
-    0%, 100% { border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%; }
-    33% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-    66% { border-radius: 30% 70% 70% 30% / 40% 60% 40% 60%; }
+/* Анимации пульсации */
+@keyframes pulse1 {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
 }
 
-@keyframes morphShape2 {
-    0%, 100% { border-radius: 50% 50% 60% 40% / 60% 40% 60% 40%; }
-    50% { border-radius: 70% 30% 40% 60% / 40% 70% 30% 60%; }
+@keyframes pulse2 {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
 }
 
-@keyframes morphShape3 {
-    0%, 100% { border-radius: 45% 55% 55% 45% / 55% 45% 55% 45%; }
-    25% { border-radius: 65% 35% 25% 75% / 45% 65% 35% 55%; }
-    50% { border-radius: 35% 65% 75% 25% / 65% 35% 65% 35%; }
-    75% { border-radius: 55% 45% 35% 65% / 75% 25% 75% 25%; }
+@keyframes pulse3 {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.9; }
 }
 
-@keyframes morphShape4 {
-    0%, 100% { border-radius: 30% 70% 70% 30% / 40% 60% 40% 60%; }
-    33% { border-radius: 60% 40% 20% 80% / 70% 30% 70% 30%; }
-    66% { border-radius: 40% 60% 80% 20% / 30% 70% 30% 70%; }
+@keyframes pulse4 {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.95; }
 }
 
-@keyframes morphShape5 {
-    0%, 100% { border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%; }
-    50% { border-radius: 70% 30% 70% 30% / 30% 70% 30% 70%; }
+@keyframes pulse5 {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
 }
 
-@keyframes morphShape6 {
-    0%, 100% { border-radius: 25% 75% 75% 25% / 35% 65% 35% 65%; }
-    50% { border-radius: 75% 25% 25% 75% / 65% 35% 65% 35%; }
+@keyframes pulse6 {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+/* Плавные переходы для всего сайта */
+.page-wrapper {
+    animation: fadeInUp 1.5s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Навигация - видима только на компьютерах */
@@ -219,7 +255,7 @@ body {
 .nav-progress {
     height: 200px;
     width: 2px;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(93, 64, 55, 0.2);
     position: relative;
 }
 
@@ -228,7 +264,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background: var(--color-black);
+    background: var(--color-chocolate);
     transition: height 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -242,14 +278,14 @@ body {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(93, 64, 55, 0.3);
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
 }
 
 .nav-dot.active {
-    background: var(--color-black);
+    background: var(--color-chocolate);
     transform: scale(1.2);
 }
 
@@ -261,7 +297,7 @@ body {
     right: -8px;
     bottom: -8px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(93, 64, 55, 0.1);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -280,7 +316,7 @@ body {
 .nav-arrow {
     width: 44px;
     height: 44px;
-    border: 1.5px solid rgba(0, 0, 0, 0.3);
+    border: 1.5px solid rgba(93, 64, 55, 0.3);
     background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     cursor: pointer;
@@ -300,7 +336,7 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(93, 64, 55, 0.1), transparent);
     transition: left 0.6s ease;
 }
 
@@ -309,10 +345,10 @@ body {
 }
 
 .nav-arrow:hover {
-    background: var(--color-black);
-    border-color: var(--color-black);
+    background: var(--color-chocolate);
+    border-color: var(--color-chocolate);
     transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(93, 64, 55, 0.2);
 }
 
 .nav-arrow:hover svg {
@@ -327,18 +363,18 @@ body {
 
 .nav-arrow:disabled:hover {
     background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(0, 0, 0, 0.3);
+    border-color: rgba(93, 64, 55, 0.3);
     box-shadow: none;
 }
 
 .nav-arrow:disabled:hover svg {
-    fill: var(--color-black);
+    fill: var(--color-chocolate);
 }
 
 .nav-arrow svg {
     width: 20px;
     height: 20px;
-    fill: var(--color-black);
+    fill: var(--color-chocolate);
     transition: all 0.3s ease;
 }
 
@@ -352,7 +388,7 @@ body {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--color-gray-200);
+    border-bottom: 1px solid rgba(93, 64, 55, 0.1);
     transition: all 0.3s ease;
 }
 
@@ -368,7 +404,7 @@ body {
 .logo {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--color-black);
+    color: var(--color-chocolate);
     text-decoration: none;
     letter-spacing: -0.02em;
 }
@@ -379,20 +415,22 @@ body {
 }
 
 .nav-link {
-    color: var(--color-gray-700);
+    color: var(--color-chocolate);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.875rem;
     transition: color 0.2s ease;
     position: relative;
+    opacity: 0.8;
 }
 
 .nav-link:hover {
-    color: var(--color-black);
+    color: var(--color-peach);
+    opacity: 1;
 }
 
 .nav-button {
-    background: var(--color-black);
+    background: var(--color-chocolate);
     color: var(--color-white);
     border: none;
     padding: 0.625rem 1.25rem;
@@ -404,7 +442,7 @@ body {
 }
 
 .nav-button:hover {
-    background: var(--color-gray-800);
+    background: var(--color-peach);
     transform: translateY(-1px);
 }
 
@@ -415,7 +453,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    background: var(--color-white);
+    background: transparent;
     padding: 0 2rem;
 }
 
@@ -437,6 +475,7 @@ body {
     height: 4.5rem;
     position: relative;
     overflow: hidden;
+    color: var(--color-chocolate);
 }
 
 .title-line {
@@ -457,10 +496,11 @@ body {
 .hero-subtitle {
     font-size: clamp(1.25rem, 4vw, 1.75rem);
     font-weight: 400;
-    color: var(--color-gray-600);
+    color: var(--color-chocolate);
     height: 1.75rem;
     position: relative;
     overflow: hidden;
+    opacity: 0.8;
 }
 
 .subtitle-line {
@@ -490,21 +530,24 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 0.75rem;
-    color: var(--color-gray-500);
+    color: var(--color-chocolate);
     font-size: 0.875rem;
     cursor: pointer;
     transition: color 0.2s ease;
+    opacity: 0.7;
 }
 
 .scroll-indicator:hover {
-    color: var(--color-gray-700);
+    color: var(--color-peach);
+    opacity: 1;
 }
 
 .scroll-line {
     width: 1px;
     height: 50px;
-    background: var(--color-gray-400);
+    background: var(--color-chocolate);
     animation: scrollBounce 2s infinite;
+    opacity: 0.5;
 }
 
 @keyframes scrollBounce {
@@ -518,10 +561,10 @@ body {
     }
 }
 
-/* Project Showcase - EXACT UNStudio replica */
+/* Project Showcase */
 .project-showcase {
     position: relative;
-    background: var(--color-white);
+    background: transparent;
     min-height: 500vh;
 }
 
@@ -543,18 +586,19 @@ body {
 
 .showcase-eyebrow {
     font-size: 0.75rem;
-    color: var(--color-gray-500);
+    color: var(--color-chocolate);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
     font-weight: 500;
+    opacity: 0.7;
 }
 
 .showcase-heading {
     font-size: 2.5rem;
     font-weight: 600;
     line-height: 1.1;
-    color: var(--color-black);
+    color: var(--color-chocolate);
     letter-spacing: -0.02em;
 }
 
@@ -741,7 +785,7 @@ body {
 
 .project-name {
     font-size: 0.75rem;
-    color: var(--color-gray-200);
+    color: var(--color-light-olive);
     margin-bottom: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -785,7 +829,7 @@ body {
 
 .project-counter {
     font-size: 0.875rem;
-    color: var(--color-gray-200);
+    color: var(--color-light-olive);
     font-weight: 500;
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     opacity: 0.9;
@@ -802,7 +846,7 @@ body {
 .project-button {
     background: transparent;
     color: var(--color-white);
-    border: 1px solid var(--color-gray-300);
+    border: 1px solid var(--color-light-olive);
     padding: 0.75rem 1.5rem;
     border-radius: 25px;
     font-size: 0.875rem;
@@ -824,9 +868,9 @@ body {
 }
 
 .project-button:hover {
-    background: var(--color-white);
-    color: var(--color-black);
-    border-color: var(--color-white);
+    background: var(--color-peach);
+    color: var(--color-chocolate-dark);
+    border-color: var(--color-peach);
     transform: translateY(-1px);
 }
 
@@ -835,32 +879,9 @@ body {
     min-height: 100vh;
     width: 100%;
     position: relative;
+    background: transparent;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .project-showcase-header {
-        left: 1.5rem;
-        max-width: 320px;
-    }
-    
-    .showcase-heading {
-        font-size: 2rem;
-    }
-    
-    .project-showcase-card {
-        width: 90%;
-        height: 60vh;
-    }
-    
-    .project-showcase-content {
-        padding: 2rem;
-    }
-    
-    .project-opportunity {
-        font-size: 1.5rem;
-    }
-}
 /* Ensure all project items are properly styled */
 .project-showcase-item[data-index="3"],
 .project-showcase-item[data-index="4"], 
@@ -909,6 +930,30 @@ body {
 .project-showcase-item.far .project-button {
     opacity: 0.5;
     transform: translateY(4px);
+}
+
+@media (max-width: 1024px) {
+    .project-showcase-header {
+        left: 1.5rem;
+        max-width: 320px;
+    }
+    
+    .showcase-heading {
+        font-size: 2rem;
+    }
+    
+    .project-showcase-card {
+        width: 90%;
+        height: 60vh;
+    }
+    
+    .project-showcase-content {
+        padding: 2rem;
+    }
+    
+    .project-opportunity {
+        font-size: 1.5rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1001,4 +1046,29 @@ body {
     .project-opportunity {
         font-size: 1.125rem;
     }
+}
+
+/* Force animations to work */
+.organic-shape {
+    animation-play-state: running !important;
+    visibility: visible !important;
+    display: block !important;
+}
+
+.floating-background {
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Гарантия что body становится видимым */
+body.loaded {
+    opacity: 1 !important;
+}
+
+/* Анимация при наведении на карточки */
+.project-showcase-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 
+        0 50px 80px -20px rgba(0, 0, 0, 0.3),
+        0 30px 50px -30px rgba(0, 0, 0, 0.4) !important;
 }
