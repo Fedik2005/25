@@ -113,23 +113,24 @@ class ProjectShowcase {
         this.scrollProgress = Math.max(0, Math.min(1, (scrollY - containerStart) / (containerHeight - windowHeight)));
         
         // Calculate which item should be active based on scroll position
-        const itemHeight = containerHeight / this.totalItems;
-        const newIndex = Math.floor((scrollY - containerStart) / itemHeight);
+        // Разделяем область прокрутки на равные части для каждого элемента
+        const itemScrollHeight = (containerHeight - windowHeight) / (this.totalItems - 1);
+        let newIndex = 0;
+        
+        if (scrollY >= containerStart) {
+            const scrollWithinSection = scrollY - containerStart;
+            newIndex = Math.floor(scrollWithinSection / itemScrollHeight);
+        }
         
         const clampedIndex = Math.max(0, Math.min(this.totalItems - 1, newIndex));
         
         if (clampedIndex !== this.currentIndex) {
             this.currentIndex = clampedIndex;
+            this.updateItemStates();
         }
-        
-        // Calculate progress within current item (0 to 1)
-        const itemStart = containerStart + (this.currentIndex * itemHeight);
-        const itemProgress = Math.max(0, Math.min(1, (scrollY - itemStart) / itemHeight));
-        
-        this.updateItemStates(itemProgress);
     }
     
-    updateItemStates(itemProgress = 0) {
+    updateItemStates() {
         this.items.forEach((item, index) => {
             const distance = index - this.currentIndex;
             
@@ -139,61 +140,21 @@ class ProjectShowcase {
             if (distance === 0) {
                 // Current active item
                 item.classList.add('active');
-                this.updateActiveItem(item, itemProgress);
             } else if (distance === -1) {
                 // Previous item
                 item.classList.add('previous');
-                this.updatePreviousItem(item, itemProgress);
             } else if (distance === 1) {
                 // Next item
                 item.classList.add('next');
-                this.updateNextItem(item, itemProgress);
             } else {
                 // Far items
                 item.classList.add('far');
-                this.updateFarItem(item, distance);
             }
         });
     }
     
-    updateActiveItem(item, progress) {
-        const card = item.querySelector('.project-showcase-card');
-        // Active card scales down slightly and moves up as we scroll through its section
-        const scale = 1 - (0.04 * progress);
-        const translateY = -30 * progress;
-        card.style.transform = `scale(${scale}) translateY(${translateY}px)`;
-    }
-    
-    updatePreviousItem(item, progress) {
-        const card = item.querySelector('.project-showcase-card');
-        // Previous card moves up and scales up slightly
-        const scale = 0.92 + (0.03 * progress);
-        const translateY = -60 + (25 * progress);
-        card.style.transform = `scale(${scale}) translateY(${translateY}px)`;
-    }
-    
-    updateNextItem(item, progress) {
-        const card = item.querySelector('.project-showcase-card');
-        // Next card moves up and scales up
-        const scale = 0.96 - (0.04 * progress);
-        const translateY = 40 - (40 * progress);
-        card.style.transform = `scale(${scale}) translateY(${translateY}px)`;
-    }
-    
-    updateFarItem(item, distance) {
-        const card = item.querySelector('.project-showcase-card');
-        // Far items are scaled down based on distance
-        const scale = 0.88 - (Math.abs(distance) * 0.02);
-        const translateY = distance > 0 ? 80 : -60;
-        card.style.transform = `scale(${scale}) translateY(${translateY}px)`;
-    }
-    
     handleResize() {
-        // Reset transforms on resize
-        this.items.forEach(item => {
-            const card = item.querySelector('.project-showcase-card');
-            card.style.transform = 'scale(0.96) translateY(40px)';
-        });
+        // Reset on resize
         this.updateItemStates();
     }
 }
