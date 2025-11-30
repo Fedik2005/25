@@ -208,16 +208,51 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    .photo-container {
-        height: 250px;
+@media screen and (max-width: 1250px) {
+    .layout-container {
+        padding: 0 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header-first-row {
+        padding: 12px 15px;
     }
     
-    .name-and-description-wrapper {
-        bottom: 160px; /* Адаптивное значение для мобильных */
-        left: 15px;
-        right: 15px;
-        padding: 12px;
+    .header-spacer {
+        height: 70px;
+    }
+    
+    .filters-block {
+        padding: 0 15px;
+    }
+    
+    .filter-by-category {
+        gap: 10px;
+        padding: 12px 0;
+    }
+    
+    .filter-item {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+    
+    .layout-container {
+        padding: 15px;
+    }
+    
+    .products-block-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .products-block-title {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .photo-container {
+        height: 220px;
     }
     
     .position-name {
@@ -229,60 +264,16 @@ body {
     }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 640px) {
+    .layout-container {
+        padding: 0 15px;
+    }
+    
+    .products-block-content {
+        gap: 12px;
+    }
+    
     .photo-container {
         height: 200px;
-    }
-    
-    .name-and-description-wrapper {
-        bottom: 120px; /* Еще меньше для маленьких экранов */
-        left: 10px;
-        right: 10px;
-        padding: 10px;
-    }
-    
-    .position-name {
-        font-size: 15px;
-    }
-    
-    .position-description {
-        font-size: 12px;
-    }
-}
-@media (max-width: 480px) {
-    .header-spacer {
-        height: 65px;
-    }
-    
-    .logo-container {
-        max-width: 150px;
-    }
-    
-    .products-block-title {
-        font-size: 18px;
-    }
-    
-    .photo-container {
-        height: 160px;
-    }
-    
-    .filter-by-category {
-        gap: 8px;
-    }
-    
-    .filter-item {
-        font-size: 12px;
-        padding: 5px 10px;
-    }
-}
-
-@media (max-width: 360px) {
-    .filter-by-category {
-        gap: 6px;
-    }
-    
-    .filter-item {
-        font-size: 11px;
-        padding: 4px 8px;
     }
 }
