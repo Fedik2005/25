@@ -209,44 +209,36 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .header-first-row {
-        padding: 12px 15px;
+    .photo-container {
+        height: 250px;
     }
     
-    .header-spacer {
-        height: 70px;
+    .name-and-description-wrapper {
+        bottom: 160px; /* Адаптивное значение для мобильных */
+        left: 15px;
+        right: 15px;
+        padding: 12px;
     }
     
-    .filters-block {
-        padding: 0 15px;
+    .position-name {
+        font-size: 16px;
     }
     
-    .filter-by-category {
-        gap: 10px;
-        padding: 12px 0;
-    }
-    
-    .filter-item {
+    .position-description {
         font-size: 13px;
-        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .photo-container {
+        height: 200px;
     }
     
-    .layout-container {
-        padding: 15px;
-    }
-    
-    .products-block-content {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .products-block-title {
-        font-size: 20px;
-        margin-bottom: 15px;
-    }
-    
-    .description-section {
-        padding: 15px;
+    .name-and-description-wrapper {
+        bottom: 120px; /* Еще меньше для маленьких экранов */
+        left: 10px;
+        right: 10px;
+        padding: 10px;
     }
     
     .position-name {
@@ -254,18 +246,9 @@ body {
     }
     
     .position-description {
-        font-size: 13px;
-    }
-    
-    .position-price {
-        font-size: 16px;
-    }
-    
-    .photo-container {
-        height: 250px;
+        font-size: 12px;
     }
 }
-
 @media (max-width: 480px) {
     .header-spacer {
         height: 65px;
