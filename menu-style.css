@@ -205,62 +205,53 @@ body {
 }
 
 /* Responsive */
-/* Responsive */
 @media screen and (max-width: 1250px) {
     .layout-container {
         padding: 0 30px;
     }
 }
 
+/* ТОЛЬКО САМЫЕ НЕОБХОДИМЫЕ ИСПРАВЛЕНИЯ ДЛЯ iPhone */
 @media screen and (max-width: 768px) {
     .header-first-row {
-        padding: 12px 15px;
-    }
-    
-    .header-spacer {
-        height: 20px; /* ← ОСТАВЛЯЕМ 20px как в десктопе */
-    }
-    
-    .filters-block-wrapper {
-        top: 20px; /* ← УМЕНЬШАЕМ для мобильных */
+        padding: 15px 20px; /* ← Оставляем как на ПК */
     }
     
     .filters-block {
-        padding: 0 15px;
-    }
-    
-    .filter-by-category {
-        gap: 10px;
-        padding: 12px 0;
-    }
-    
-    .filter-item {
-        font-size: 13px;
-        padding: 6px 12px;
-        border-width: 1.5px; /* ← Уменьшаем толщину обводки для мобильных */
+        padding: 0 20px; /* ← Оставляем как на ПК */
     }
     
     .layout-container {
-        padding: 15px;
+        padding: 20px; /* ← Оставляем как на ПК */
     }
     
-    .products-block-content {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .products-block-title {
-        font-size: 20px;
-        margin-bottom: 15px;
-    }
-    
-    .photo-container {
-        height: 250px; /* ← Увеличиваем высоту для мобильных */
-    }
-    
-    /* АДАПТИРУЕМ ТЕКСТ НА ФОТО ДЛЯ МОБИЛЬНЫХ */
+    /* ЕДИНСТВЕННОЕ ВАЖНОЕ ИСПРАВЛЕНИЕ - адаптивная позиция текста */
     .name-and-description-wrapper {
-        bottom: 20px; /* ← Адаптивная позиция */
+        bottom: 40px; /* ← Адаптивное значение вместо 260px */
+        left: 20px;
+        right: 20px;
+    }
+    
+    /* Уменьшаем размер шрифта пропорционально */
+    .position-name {
+        font-size: 17px;
+    }
+    
+    .position-description {
+        font-size: 13px;
+    }
+    
+    /* Делаем фильтры компактнее, но сохраняем стиль */
+    .filter-item {
+        font-size: 12px;
+        padding: 7px 14px;
+    }
+}
+
+/* Для очень маленьких iPhone */
+@media screen and (max-width: 375px) {
+    .name-and-description-wrapper {
+        bottom: 30px;
         left: 15px;
         right: 15px;
         padding: 12px;
@@ -268,88 +259,15 @@ body {
     
     .position-name {
         font-size: 16px;
-        margin-bottom: 4px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); /* ← Усиливаем тень */
-    }
-    
-    .position-description {
-        font-size: 13px;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); /* ← Усиливаем тень */
-    }
-}
-
-@media screen and (max-width: 640px) {
-    .layout-container {
-        padding: 0 15px;
-    }
-    
-    .products-block-content {
-        gap: 12px;
-    }
-    
-    .photo-container {
-        height: 220px;
-    }
-    
-    .name-and-description-wrapper {
-        bottom: 15px;
-        left: 10px;
-        right: 10px;
-        padding: 10px;
-    }
-    
-    .position-name {
-        font-size: 15px;
     }
     
     .position-description {
         font-size: 12px;
     }
     
-    .filter-by-category {
-        gap: 8px;
-    }
-    
-    .filter-item {
-        font-size: 12px;
-        padding: 5px 10px;
-    }
-}
-
-/* Для очень маленьких экранов */
-@media screen and (max-width: 480px) {
-    .photo-container {
-        height: 200px;
-    }
-    
-    .name-and-description-wrapper {
-        bottom: 10px;
-        left: 8px;
-        right: 8px;
-        padding: 8px;
-    }
-    
-    .position-name {
-        font-size: 14px;
-    }
-    
-    .position-description {
-        font-size: 11px;
-    }
-    
-    .products-block-title {
-        font-size: 18px;
-    }
-}
-
-/* Для iPhone SE и подобных маленьких экранов */
-@media screen and (max-width: 375px) {
-    .photo-container {
-        height: 180px;
-    }
-    
+    /* Делаем фильтры еще компактнее */
     .filter-item {
         font-size: 11px;
-        padding: 4px 8px;
+        padding: 6px 12px;
     }
 }
