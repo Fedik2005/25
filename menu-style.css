@@ -251,7 +251,7 @@ body {
 /* Для очень маленьких iPhone */
 @media screen and (max-width: 375px) {
     .name-and-description-wrapper {
-        bottom: 30px;
+        bottom: 260px;
         left: 15px;
         right: 15px;
         padding: 12px;
